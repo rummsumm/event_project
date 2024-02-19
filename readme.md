@@ -7,15 +7,23 @@
 
 ## 2) Virutelles Enviroment aktivieren und pip-tools installieren
 
+    !Hinweis: um ein neues Environement zu aktivieren, muss ein anderes erst verlassen werden:
+    deactivate
+
+    # 1) neues Enviroment activieren
     eventenv\Scripts\activate
+
+    # 2) pip-tools für das Enviroment installieren
     pip install pip-tools
 
 
 ## 3) Projektverzeichnis erstellen, requirements.in Datei anlegen und kompilieren
 
+    # 1) Projektverzeichnis erstellen
     mkdir event_project
     cd event_project
 
+    # 2) Django-Projektverzeichnis erstellen
     mkdir event_manager
     cd event_manager
 
@@ -34,6 +42,7 @@
 den Django-Entwicklungsserver starten
 
     python manage.py runserver
+    http://127.0.0.1:8000
 
 ## 6) eine neue App anlegen (events)
 mit diesem Befehl lässt sich eine neue App anlegen:
