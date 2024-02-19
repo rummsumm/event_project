@@ -11,8 +11,10 @@
     pip install pip-tools
 
 
-## 3) Requirements.in Datei anlegen und kompilieren
+## 3) Projektverzeichnis erstellen, requirements.in Datei anlegen und kompilieren
 
+    mkdir event_project
+    cd event_project
 
     mkdir event_manager
     cd event_manager
@@ -21,11 +23,12 @@
     
     pip-compile requirements.in  => erstellt requirements.txt
     pip-sync requirements.txt
+    pip freeze => zeigt alle installierten Abhängigkeiten
 
 ## 4) Django Projekt erstellen
 
+    cd event_manager
     django-admin startproject event_manager .
-
 
 ## 5) Runserver starten
 den Django-Entwicklungsserver starten
@@ -45,4 +48,8 @@ mit diesem Befehl lässt sich eine neue App anlegen:
 ## 8) Objekte anlegen
 
     python manage.py shell
+
+    from events.models import Category
+    obj = Category(name="Test")
+    obj.save()
     
