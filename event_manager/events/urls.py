@@ -15,7 +15,4 @@ urlpatterns = [
     # http://127.0.0.1:8000/events/categories
     path("categories", views.categories, name="categories"),
 
-    # http://127.0.0.1:8000/events/hello
-    path("hello", views.first_view, name="first_name"),
-
 ]
