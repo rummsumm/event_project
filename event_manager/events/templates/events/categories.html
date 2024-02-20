@@ -1,0 +1,10 @@
+<h1>Übersicht der Kategorien</h1>
+
+<p>
+    <a href="">Neue Kategorie anlegen</a>
+</p>
+<ul>
+    {% for category in categories %}
+    <li><a href="{% url 'events:category' category.pk %}">{{category}}</a></li>
+    {% endfor %}
+</ul>
