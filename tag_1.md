@@ -61,8 +61,4 @@ mit diesem Befehl lässt sich eine neue App anlegen:
     from events.models import Category
     obj = Category(name="Test")
     obj.save()
-
-    # Löschen
-    obj.delete()
-
     
