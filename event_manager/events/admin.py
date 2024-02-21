@@ -17,12 +17,13 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "category", "date", "is_active")
+    list_display = ("id", "name", "category", "author", "date", "is_active")
     # # alle Felder in Übersicht
     # list_display = [field.name for field in Event._meta.get_fields()] 
     list_display_links = ("id", "name") 
     search_fields = ["id", "name", "sub_title"] 
     actions = ["make_active", "make_inactive"]
+    readonly_fields = ["author"]
 
     @admin.action(description="Setze Events auf aktiv")  # Name der Aktion in Selectbox
     def make_active(self, request, queryset):
@@ -39,7 +40,7 @@ class EventAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Standard info", 
-            {"fields": ("name", "date", "category")}),
+            {"fields": ("name", "date", "category", "author")}),
         (
             "Detail Infos",
             {"fields": ("min_group", "sub_title", "is_active")},

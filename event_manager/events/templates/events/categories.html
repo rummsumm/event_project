@@ -1,10 +1,35 @@
-<h1>Übersicht der Kategorien</h1>
+{% extends "base.html" %}
 
+{% block title %}
+Übersicht der Kategorien
+{% endblock %}
+
+
+{% block head %}
+<h1>Übersicht der Kategorien</h1>
+{% endblock %}
+
+{% block content %}
 <p>
-    <a href="">Neue Kategorie anlegen</a>
+    <a href="{% url 'events:category_create' %}">Neue Kategorie anlegen</a>
 </p>
+
+<ul>
+    {% if categories %}
+        {% for category in categories %}
+            <li><a href="{% url 'events:category' category.pk %}">{{category}}</a></li>
+        {% endfor %}
+    {% else %}
+        <li>Es sind keine Kategorien vorhanden</li>
+    {% endif %}
+</ul>
+
+{% endblock %}
+
 <ul>
     {% for category in categories %}
-    <li><a href="{% url 'events:category' category.pk %}">{{category}}</a></li>
+        <li>{{ category.name }}</li>
+    {% empty %}
+        <li>Sorry, no categories in this list.</li>
     {% endfor %}
 </ul>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Übersicht der Events
+{% endblock %}
+
+
+{% block head %}
+<h1>Übersicht der Events</h1>
+{% endblock %}
+
+{% block content %}
+<p>
+    <a href="{% url 'events:event_create' %}">Neue Event anlegen</a>
+</p>
+
+<ul class="list-group event_box">
+    {% for event in object_list %}
+    <a href="{{event.get_absolute_url}}">
+    <li class="list-group-item rounded">
+
+    <small><span>am {{event.date}}</span></small><br>
+    <b>{{event.name}}</b>
+        <span class="badge rounded-pill bg-primary">{{event.category}}</span>
+        <p>by admin</p>
+    </li>
+    </a>
+    {% endfor%}
+</ul>
+
+
+{% endblock %}

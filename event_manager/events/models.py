@@ -1,4 +1,8 @@
 from django.db import models
+from django.urls import reverse
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Category(models.Model):
@@ -13,6 +17,9 @@ class Category(models.Model):
     # blank = True => darf im Formular leer sein.
     sub_title = models.CharField(max_length=200, null=True, blank=True) #optionales Feld
     description = models.TextField(null=True, blank=True) # optionales Textfeld
+
+    def get_absolute_url(self):
+        return reverse("events:category", kwargs={"pk": self.pk})
 
     def __str__(self):
         # String-Repräsentation
@@ -37,12 +44,17 @@ class Event(models.Model):
     category = models.ForeignKey(Category, 
                                  on_delete=models.CASCADE, 
                                  related_name="events")
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="events") # bob.events
     
     # mandatory! Django wird bei Migration nachfragen, was zu tun ist.
     date = models.DateTimeField()
 
     # darf nur 0, 5, 10, 15 sein (festgelegt via class Group)
     min_group = models.PositiveSmallIntegerField(choices=Group.choices, default=Group.UNLIMITED) 
+
+    def get_absolute_url(self):
+        return reverse("events:event", kwargs={"pk": self.pk})
 
     def __str__(self) -> str:
         return self.name

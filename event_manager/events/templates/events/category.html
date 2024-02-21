@@ -1,4 +1,16 @@
-<h1>{{category}}</h1>
+{% extends "base.html" %}
+
+{% block title %}
+Das ist die Kategorie: {{category}}
+{% endblock %}
+
+{% block head %}
+<h1>{{category|upper}}</h1>
+<p><a href="{% url 'events:category_update' category.pk %}">Kategorie editieren</a></p>
+{% endblock %}
+
+{% block content %}
 <p><a href="{% url 'events:categories' %}">zurück zur Übersicht der Kategorien</a></p>
-<p>{{category.sub_title}}</p>
-<p>{{category.description}}</p>
+<p>{{category.sub_title|default_if_none:'-'}}</p>
+<p>{{category.description|linebreaks}}</p>
+{% endblock %}

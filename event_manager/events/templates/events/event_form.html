@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {% if event %}
+        Event {{event}} editieren
+    {% else %}
+        neue Event anlegen
+    {% endif %}
+{% endblock %}
+
+{% block head %}
+
+{% if event %}
+    <h1>Event {{event}} editieren</h1>
+{% else %}
+    <h1>neue Event anlegen</h1>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'events:categories' %}">zurück zur Übersicht der Events</a></p>
+
+<div>
+<form method="POST">
+{% csrf_token %}
+
+{{form|crispy}}
+
+<div>
+<button class="btn btn-primary">Formular absenden</button>
+</div>
+
+</form>
+</div>
+
+
+{% endblock %}

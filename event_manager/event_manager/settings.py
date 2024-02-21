@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'events',  # neue Apps immer hier eintragen!
+    "crispy_forms",
+    "crispy_bootstrap5", # wurde in requirements.in eingetragen und installiert
 ]
 
 MIDDLEWARE = [
@@ -51,13 +53,26 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+if DEBUG:
+    MIDDLEWARE.extend(["debug_toolbar.middleware.DebugToolbarMiddleware"])
+
+    INSTALLED_APPS.extend(
+        ["debug_toolbar"]
+    )
+
+    INTERNAL_IPS = ("127.0.0.1",)  # Docker-IP!
+
+
 ROOT_URLCONF = 'event_manager.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / "event_manager" / "templates"],
+        'APP_DIRS': True,  # suche in den apps nach Templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -116,7 +131,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/'  # URL-PFAD, zb. static/css/style.css, wird erzeugt durch static-Tag
+
+# hier liegen die statischen Dateien (neben den Apps!)
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

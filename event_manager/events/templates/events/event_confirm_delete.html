@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Event löschen
+{% endblock %}
+
+{% block head %}
+<h1>Event {{event}} löschen?</h1>
+{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'events:categories' %}">zurück zur Übersicht der Events</a></p>
+
+<h2>Sicher löschen?</h2>
+
+<div>
+<form method="POST">
+{% csrf_token %}
+<div>
+<button class="btn btn-primary">Event löschen</button>
+</div>
+
+</form>
+</div>
+
+
+{% endblock %}
