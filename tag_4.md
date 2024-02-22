@@ -18,6 +18,7 @@ zb. python manage.py show_urls
 
 ## Logging
 https://realpython.com/python-logging/
+Loggin in settings.py konfigurieren
 
 ## Statische Dateien
 
@@ -26,5 +27,5 @@ python manage.py collectstatic
 
 ### Whitenoise
 
-statische Dateien im Produktivbetrieb via WSGI ausliefern
+statische Dateien im Produktivbetrieb via WSGI ausliefern (gzip, mit Header versehen)
 https://whitenoise.readthedocs.io/en/latest/
