@@ -34,3 +34,4 @@ urlpatterns = [
     path("categories", views.categories, name="categories"),
 
 ]
+

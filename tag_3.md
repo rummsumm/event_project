@@ -7,3 +7,4 @@ VSCode Extensions für Django-Templates: Django von Baptiste Darthenay und Djang
 
 base.html anlegen und eintragen in Settings: TEMPLATES
 'DIRS': [BASE_DIR / "event_manager" / "templates"],
+

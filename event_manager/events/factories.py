@@ -1,8 +1,11 @@
 import factory
 import random
 from datetime import timedelta
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from .models import Category, Event
+
+
 
 
 categories = [
@@ -19,6 +22,8 @@ categories = [
     "Music",
     "Wellness",
 ]
+
+User = get_user_model()
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
@@ -38,6 +43,7 @@ class EventFactory(factory.django.DjangoModelFactory):
     name = factory.Faker("sentence", locale="de_DE")
     sub_title = factory.Faker("sentence")
     min_group = factory.LazyAttribute(lambda _: random.choice(list(Event.Group.values)))
+    author = factory.Iterator(User.objects.all())
 
     date = factory.Faker(
             "date_time_between",
