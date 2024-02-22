@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "base.html" %}category
+{% load my_tags %}
 
 {% block title %}
 Event: {{event}}
@@ -6,13 +7,27 @@ Event: {{event}}
 
 {% block head %}
 <h1>{{event|upper}}</h1>
+
+{% if user == event.author or user|in_group:"Moderatoren" %}
 <p>
     <a href="{% url 'events:event_update' event.pk %}">Event editieren</a> | 
     <a href="{% url 'events:event_delete' event.pk %}">Event löschen</a>
 </p>
+{% endif %}
 {% endblock %}
 
 {% block content %}
 <p><a href="{% url 'events:events' %}">zurück zur Übersicht der Events</a></p>
 <p>{{event.sub_title|default_if_none:'-'}}</p>
+
+
+<h2>Ähnliche Events</h2>
+<ul>
+    {% for event in event.related_events %}
+        <li><a href="{% url 'events:event' event.pk %}">{{ event.name }}</a></li>
+    {% empty %}
+        <li>Sorry, no events in this list.</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}

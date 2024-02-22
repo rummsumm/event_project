@@ -32,7 +32,7 @@ MESSAGE_TAGS = {
 SECRET_KEY = "django-insecure-q2w&77jy6#1a_jgjgs_0@68kapxxh-4a19tnx)#c2^bgr7y3j8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # => Environment ablegen!
+DEBUG = False  # => Environment ablegen!
 
 # Im Produktivbetrieb muss hier der Host eingetragen werden!
 ALLOWED_HOSTS = ["example.com", "*", "localhost", "127.0.0.1"]
@@ -46,10 +46,13 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",  # nutze Whitenoise auch lokal
     "django.contrib.staticfiles",
     "events",  # neue Apps immer hier eintragen!
     "crispy_forms",
     "crispy_bootstrap5",  # wurde in requirements.in eingetragen und installiert
+    "pages",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +64,42 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "{levelname} {module} {asctime} {message}",
+            "style": "{",
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+            "level": "DEBUG",
+        },
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "django_errors.log",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "events": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -146,7 +185,17 @@ STATIC_URL = "static/"  # URL-PFAD, zb. static/css/style.css, wird erzeugt durch
 # hier liegen die statischen Dateien (neben den Apps!)
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# hier die statischen Dateien sammeln (für den produktiv-betrieb)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}

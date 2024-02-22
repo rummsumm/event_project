@@ -1,3 +1,6 @@
+import logging
+
+from django.db.models.query import QuerySet
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponse
@@ -9,9 +12,17 @@ from .models import Category, Event
 from .forms import CategoryForm, EventForm
 
 
+logger = logging.getLogger("events")
+
+
 class UserIsOwnerMixin(UserPassesTestMixin):
     def test_func(self) -> bool:
-        return self.request.user == self.get_object().author
+        return (
+            self.request.user == self.get_object().author  # wenn User der Autor ist
+            or self.request.user.groups.filter(
+                name="Moderatoren"
+            ).exists()  # oder Moderator
+        )
 
     # def test_func(self) -> bool:
     #     """Falls True, darf Aktion ausgeführt werden!
@@ -57,12 +68,22 @@ class EventDetailView(DetailView):
 
 class EventListView(ListView):
     """
-    events/
+    events?q=suchwort
     generischer Templatename: event_list.html
     """
 
     model = Event
-    queryset = Event.objects.select_related("category")
+    queryset = Event.objects.select_related("category", "author")
+    paginate_by = 10
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        suchbegriff = self.request.GET.get("q")
+        if suchbegriff:
+            return qs.filter(name__icontains=suchbegriff) | qs.filter(
+                sub_title__icontains=suchbegriff
+            )
+        return qs
 
 
 def category_update(request, pk):
@@ -135,6 +156,7 @@ def categories(request):
     print("user: ", request.user)
     print("Methode:", request.method)
     categories = Category.objects.all()
+    logger.warning("Das ist eine Warnung!")
 
     context = {
         "categories": categories,

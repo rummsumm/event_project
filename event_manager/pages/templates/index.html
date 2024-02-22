@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Homepage
+{% endblock %}
+
+
+{% block head %}
+<h1>Homepage</h1>
+{% endblock %}
+
+{% block content %}
+<ul>
+    {% for category in categories %}
+        <li><a href="{% url 'events:category' category.pk %}">{{ category.name }}</a></li>
+    {% empty %}
+        <li>Sorry, no categories in this list.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

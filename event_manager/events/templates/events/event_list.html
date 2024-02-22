@@ -22,11 +22,12 @@
     <small><span>am {{event.date}}</span></small><br>
     <b>{{event.name}}</b>
         <span class="badge rounded-pill bg-primary">{{event.category}}</span>
-        <p>by admin</p>
+        <p>by {{event.author}}</p>
     </li>
     </a>
     {% endfor%}
 </ul>
 
+{% include "snippets/pagination.html" %}
 
 {% endblock %}

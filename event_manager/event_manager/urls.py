@@ -10,6 +10,8 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
+    # http://127.0.0.1:8000
+    path("", include("pages.urls")),
     path("admin/", admin.site.urls),  # http://127.0.0.1:8000/admin
     # http://127.0.0.1:8000/events/hello
     # http://127.0.0.1:8000/events/show
