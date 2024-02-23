@@ -32,7 +32,7 @@ MESSAGE_TAGS = {
 SECRET_KEY = "django-insecure-q2w&77jy6#1a_jgjgs_0@68kapxxh-4a19tnx)#c2^bgr7y3j8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # => Environment ablegen!
+DEBUG = True  # => Environment ablegen!
 
 # Im Produktivbetrieb muss hier der Host eingetragen werden!
 ALLOWED_HOSTS = ["example.com", "*", "localhost", "127.0.0.1"]
@@ -53,10 +53,15 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",  # wurde in requirements.in eingetragen und installiert
     "pages",
     "django_extensions",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -132,6 +137,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "event_manager.wsgi.application"
 
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Event Manager API",
+    "DESCRIPTION": "Django Event manager",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    # 'SERVE_AUTHENTICATION': ['rest_framework.authentication.SessionAuthentication'],
+    # 'SERVE_PERMISSIONS': ['rest_framework.permissions.IsAuthenticated'],
+    # OTHER SETTINGS
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

@@ -34,8 +34,8 @@ class EventForm(forms.ModelForm):
 
         name = self.cleaned_data["name"]
 
-        if not name.isalpha():
-            raise ValidationError("der Name darf nur Buchstaben enthalten")
+        if not all(char.isalpha() or char.isspace() for char in name):
+            raise ValidationError("der Name darf nur Buchstaben und Leerzeichen enthalten")
 
         return name
 
